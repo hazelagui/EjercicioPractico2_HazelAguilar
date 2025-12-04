@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Denegado - Plataforma Academica</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <main class="main-content">
+        <div class="card text-center">
+            <h1 style="font-size: 4rem; color: #dc3545;">X</h1>
+            <h2>Acceso Denegado</h2>
+            <p class="mt-2" style="color: #6c757d;">No tienes permisos para acceder a esta pagina.</p>
+            <div class="mt-3">
+                <a th:href="@{/}" class="btn btn-primary">Volver al Inicio</a>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

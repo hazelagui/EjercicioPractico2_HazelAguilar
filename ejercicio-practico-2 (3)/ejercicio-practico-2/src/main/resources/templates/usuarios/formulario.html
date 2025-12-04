@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo} + ' - Plataforma Academica'">Formulario de Usuario</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <main class="main-content">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title" th:text="${titulo}">Formulario de Usuario</h2>
+                <a th:href="@{/usuarios}" class="btn btn-secondary">Volver</a>
+            </div>
+            
+            <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
+                <input type="hidden" th:field="*{id}">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">Nombre *</label>
+                        <input type="text" id="nombre" th:field="*{nombre}" class="form-control"
+                               placeholder="Ingrese el nombre" required>
+                        <span th:if="${#fields.hasErrors('nombre')}" class="error-message"
+                              th:errors="*{nombre}">Error</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="apellido">Apellido *</label>
+                        <input type="text" id="apellido" th:field="*{apellido}" class="form-control"
+                               placeholder="Ingrese el apellido" required>
+                        <span th:if="${#fields.hasErrors('apellido')}" class="error-message"
+                              th:errors="*{apellido}">Error</span>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Correo Electronico *</label>
+                        <input type="email" id="email" th:field="*{email}" class="form-control"
+                               placeholder="correo@ejemplo.com" required>
+                        <span th:if="${#fields.hasErrors('email')}" class="error-message"
+                              th:errors="*{email}">Error</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Contrasena <span th:if="${editando}">(dejar vacio para mantener)</span></label>
+                        <input type="password" id="password" th:field="*{password}" class="form-control"
+                               placeholder="********">
+                        <span th:if="${#fields.hasErrors('password')}" class="error-message"
+                              th:errors="*{password}">Error</span>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="rol">Rol *</label>
+                        <select id="rol" th:field="*{rol.id}" class="form-control" required>
+                            <option value="">-- Seleccione un rol --</option>
+                            <option th:each="r : ${roles}" th:value="${r.id}" th:text="${r.nombre}">Rol</option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('rol')}" class="error-message"
+                              th:errors="*{rol}">Error</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="activo">Estado</label>
+                        <select id="activo" th:field="*{activo}" class="form-control">
+                            <option value="true">Activo</option>
+                            <option value="false">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="btn-group mt-3">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a th:href="@{/usuarios}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

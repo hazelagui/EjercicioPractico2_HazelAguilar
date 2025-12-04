@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de Roles - Plataforma Academica</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <main class="main-content">
+        <div th:if="${mensaje}" class="alert alert-success">
+            <span th:text="${mensaje}">Mensaje</span>
+        </div>
+        <div th:if="${error}" class="alert alert-danger">
+            <span th:text="${error}">Error</span>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Gestion de Roles</h2>
+                <a th:href="@{/roles/nuevo}" class="btn btn-success">Nuevo Rol</a>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Usuarios</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="rol : ${roles}">
+                            <td th:text="${rol.id}">1</td>
+                            <td>
+                                <span class="badge badge-primary" th:text="${rol.nombre}">ROL</span>
+                            </td>
+                            <td th:text="${rol.descripcion}">Descripcion del rol</td>
+                            <td>
+                                <span class="badge badge-secondary" th:text="${rol.usuarios.size()}">0</span>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a th:href="@{/roles/editar/{id}(id=${rol.id})}" class="btn btn-sm btn-warning">Editar</a>
+                                    <a th:href="@{/roles/eliminar/{id}(id=${rol.id})}" class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Esta seguro de eliminar este rol?')">Eliminar</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(roles)}">
+                            <td colspan="5" class="text-center" style="color: #6c757d;">
+                                No hay roles registrados
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

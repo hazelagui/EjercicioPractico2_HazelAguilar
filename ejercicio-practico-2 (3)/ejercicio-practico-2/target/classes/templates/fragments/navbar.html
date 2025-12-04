@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <nav th:fragment="navbar" class="navbar">
+        <div class="navbar-content">
+            <ul class="nav-links">
+                <li sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/admin/dashboard}">Dashboard</a>
+                </li>
+                <li sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/usuarios}">Usuarios</a>
+                </li>
+                <li sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/roles}">Roles</a>
+                </li>
+                <li sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/consultas}">Consultas</a>
+                </li>
+                <li sec:authorize="hasRole('PROFESOR')">
+                    <a th:href="@{/profesor/reportes}">Reportes</a>
+                </li>
+                <li sec:authorize="hasRole('ESTUDIANTE')">
+                    <a th:href="@{/estudiante/perfil}">Mi Perfil</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</body>
+</html>

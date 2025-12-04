@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultas Avanzadas - Plataforma Academica</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <main class="main-content">
+        <h2 class="mb-3">Consultas</h2>
+        
+        <div class="stats-grid">
+            <div class="stat-card success">
+                <div class="stat-number" th:text="${conteoEstado != null and conteoEstado.containsKey('activos')} ? ${conteoEstado.get('activos')} : 0">0</div>
+                <div class="stat-label">Usuarios Activos</div>
+            </div>
+            <div class="stat-card danger">
+                <div class="stat-number" th:text="${conteoEstado != null and conteoEstado.containsKey('inactivos')} ? ${conteoEstado.get('inactivos')} : 0">0</div>
+                <div class="stat-label">Usuarios Inactivos</div>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">1. Buscar por Rol</h3>
+                </div>
+                <form th:action="@{/consultas/por-rol}" method="get" class="search-form">
+                    <div class="form-group">
+                        <label for="rol">Seleccione un rol:</label>
+                        <select id="rol" name="rol" class="form-control">
+                            <option value="">-- Todos --</option>
+                            <option th:each="r : ${roles}" th:value="${r.nombre}" th:text="${r.nombre}">Rol</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">2. Buscar por Rango de Fechas</h3>
+                </div>
+                <form th:action="@{/consultas/por-fechas}" method="get" class="search-form">
+                    <div class="form-group">
+                        <label for="fechaInicio">Fecha inicio:</label>
+                        <input type="date" id="fechaInicio" name="fechaInicio" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaFin">Fecha fin:</label>
+                        <input type="date" id="fechaFin" name="fechaFin" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">3. Buscar por Nombre o Email</h3>
+                </div>
+                <form th:action="@{/consultas/buscar}" method="get" class="search-form">
+                    <div class="form-group">
+                        <label for="termino">Termino de busqueda:</label>
+                        <input type="text" id="termino" name="termino" class="form-control" 
+                               placeholder="Nombre, apellido o email...">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">4. Usuarios Ordenados por Fecha</h3>
+                </div>
+                <div class="btn-group">
+                    <a th:href="@{/consultas/ordenados(orden='desc')}" class="btn btn-info">Mas recientes primero</a>
+                    <a th:href="@{/consultas/ordenados(orden='asc')}" class="btn btn-info">Mas antiguos primero</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">5. Usuarios Recientes</h3>
+                </div>
+                <div class="btn-group">
+                    <a th:href="@{/consultas/recientes(dias=7)}" class="btn btn-success">Ultimos 7 dias</a>
+                    <a th:href="@{/consultas/recientes(dias=30)}" class="btn btn-success">Ultimos 30 dias</a>
+                    <a th:href="@{/consultas/recientes(dias=90)}" class="btn btn-success">Ultimos 90 dias</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Estadisticas Detalladas</h3>
+                </div>
+                <a th:href="@{/consultas/estadisticas}" class="btn btn-primary">Ver Estadisticas Completas</a>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

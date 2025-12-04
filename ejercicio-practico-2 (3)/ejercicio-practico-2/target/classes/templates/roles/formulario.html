@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo} + ' - Plataforma Academica'">Formulario de Rol</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <main class="main-content">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title" th:text="${titulo}">Formulario de Rol</h2>
+                <a th:href="@{/roles}" class="btn btn-secondary">Volver</a>
+            </div>
+            
+            <form th:action="@{/roles/guardar}" th:object="${rol}" method="post">
+                <input type="hidden" th:field="*{id}">
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre del Rol *</label>
+                    <input type="text" id="nombre" th:field="*{nombre}" class="form-control"
+                           placeholder="Ej: ADMIN, PROFESOR, ESTUDIANTE" required>
+                    <span th:if="${#fields.hasErrors('nombre')}" class="error-message"
+                          th:errors="*{nombre}">Error</span>
+                    <small style="color: #6c757d;">Use mayusculas sin espacios</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="descripcion">Descripcion</label>
+                    <input type="text" id="descripcion" th:field="*{descripcion}" class="form-control"
+                           placeholder="Descripcion del rol">
+                    <span th:if="${#fields.hasErrors('descripcion')}" class="error-message"
+                          th:errors="*{descripcion}">Error</span>
+                </div>
+                
+                <div class="btn-group mt-3">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a th:href="@{/roles}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Plataforma Academica</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <main class="main-content">
+        <h2 class="mb-3">Dashboard de Administracion</h2>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" th:text="${totalUsuarios}">0</div>
+                <div class="stat-label">Total de Usuarios</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" th:text="${totalRoles}">0</div>
+                <div class="stat-label">Roles Definidos</div>
+            </div>
+            <div class="stat-card success">
+                <div class="stat-number" th:text="${usuariosActivos != null} ? ${usuariosActivos} : 0">0</div>
+                <div class="stat-label">Usuarios Activos</div>
+            </div>
+            <div class="stat-card danger">
+                <div class="stat-number" th:text="${usuariosInactivos != null} ? ${usuariosInactivos} : 0">0</div>
+                <div class="stat-label">Usuarios Inactivos</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Usuarios por Rol</h3>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rol</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${usuariosPorRol != null}" th:each="entry : ${usuariosPorRol}">
+                        <td th:text="${entry.key}">Rol</td>
+                        <td><span class="badge badge-primary" th:text="${entry.value}">0</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Acciones Rapidas</h3>
+            </div>
+            <div class="btn-group">
+                <a th:href="@{/usuarios/nuevo}" class="btn btn-success">Nuevo Usuario</a>
+                <a th:href="@{/roles/nuevo}" class="btn btn-info">Nuevo Rol</a>
+                <a th:href="@{/consultas}" class="btn btn-primary">Ver Consultas</a>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

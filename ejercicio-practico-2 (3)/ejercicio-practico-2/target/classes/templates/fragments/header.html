@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <header th:fragment="header" class="header">
+        <div class="header-content">
+            <h1>Plataforma Academica</h1>
+            <div class="header-user" sec:authorize="isAuthenticated()">
+                <span>Bienvenido, <strong sec:authentication="name">Usuario</strong></span>
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-sm btn-secondary">Cerrar Sesion</button>
+                </form>
+            </div>
+        </div>
+    </header>
+</body>
+</html>

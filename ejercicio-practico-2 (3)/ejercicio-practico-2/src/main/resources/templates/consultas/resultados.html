@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Consulta - Plataforma Academica</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <main class="main-content">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Resultados de Consulta</h2>
+                <a th:href="@{/consultas}" class="btn btn-secondary">Volver a Consultas</a>
+            </div>
+            
+            <p class="mb-2" style="color: #6c757d;">
+                Se encontraron <strong th:text="${usuarios != null} ? ${#lists.size(usuarios)} : 0">0</strong> resultado(s)
+            </p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre Completo</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${usuarios != null}" th:each="usuario : ${usuarios}">
+                            <td th:text="${usuario.id}">1</td>
+                            <td th:text="${usuario.nombreCompleto}">Nombre Apellido</td>
+                            <td th:text="${usuario.email}">email@ejemplo.com</td>
+                            <td>
+                                <span class="badge badge-primary" th:text="${usuario.rol.nombre}">ROL</span>
+                            </td>
+                            <td>
+                                <span th:if="${usuario.activo}" class="badge badge-success">Activo</span>
+                                <span th:unless="${usuario.activo}" class="badge badge-danger">Inactivo</span>
+                            </td>
+                        </tr>
+                        <tr th:if="${usuarios == null or #lists.isEmpty(usuarios)}">
+                            <td colspan="5" class="text-center" style="color: #6c757d;">
+                                No se encontraron resultados
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>
